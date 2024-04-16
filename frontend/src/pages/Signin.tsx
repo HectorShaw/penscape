@@ -1,8 +1,4 @@
-
-
-export const Signin = () => {
-  return (
-    <div>Signin</div>
-  )
-}
-
+export const Signup = () => {
+    return 
+  };
+  

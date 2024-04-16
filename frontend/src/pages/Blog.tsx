@@ -1,7 +1,4 @@
-
-export const Blog=() => {
-  return (
-    <div>Blog</div>
-  )
-}
-
+export const Blog = () => {
+    return
+  };
+  
