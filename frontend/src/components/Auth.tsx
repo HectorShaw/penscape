@@ -1,15 +1,15 @@
 import React, { ChangeEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { SignupInput } from "penscape-common";
+import { SignupType } from "penscape-common";
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
 
 export const Auth = ({ type }: { type: "signup" | "signin" }) => {
   const navigate = useNavigate();
 
-  const [postInputs, setpostInputs] = useState<SignupInput>({
+  const [postInputs, setpostInputs] = useState<SignupType>({
     name: "",
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -19,7 +19,9 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
         `${BACKEND_URL}/api/v1/user/${type === "signin" ? "signin" : "signup"}`,
         postInputs
       );
-      const jwt = response.data;
+
+
+      const jwt = response.data.jwt;
       localStorage.setItem("token", jwt);
       navigate("/blogs");
     } catch (error) {}
@@ -69,7 +71,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
               onChange={(e) => {
                 setpostInputs({
                   ...postInputs,
-                  username: e.target.value,
+                  email: e.target.value,
                 });
               }}
             />

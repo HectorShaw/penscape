@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { verify } from "hono/jwt";
-import { createblogInput, updateblogInput } from "penscape-common";
+import { createPostInput, updatePostInput } from "penscape-common";
 
 export const blogRouter = new Hono<{
   Bindings: {
@@ -39,7 +39,7 @@ blogRouter.post("/", async (c) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
-  const { success } = createblogInput.safeParse(body)
+  const { success } = createPostInput.safeParse(body)
   if (!success){
     c.status(411)
     return c.json({ error: "input has some issue" });
@@ -65,7 +65,7 @@ blogRouter.put("/", async (c) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
-  const { success } = updateblogInput.safeParse(body)
+  const { success } = updatePostInput.safeParse(body)
   if (!success){
     c.status(411)
     return c.json({ error: "new input has some issue" });
@@ -90,7 +90,18 @@ blogRouter.get("/bulk", async (c) => {
     datasourceUrl: c.env?.DATABASE_URL,
   }).$extends(withAccelerate());
 
-  const posts = await prisma.post.findMany({});
+  const posts = await prisma.post.findMany({
+    select: {
+      content: true,
+      title: true,
+      id: true,
+      author: {
+        select: {
+          name: true,
+        }
+      } 
+    }
+  });
 
   return c.json(posts);
 });

@@ -2,9 +2,6 @@ import React from "react";
 import { Quote } from "../components/quote";
 import { Auth } from "../components/Auth";
 
-
-
-
 export const Signup = () => {
   return (
     <>
