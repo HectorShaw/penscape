@@ -1,15 +1,15 @@
 import  { ChangeEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { SignupType } from "penscape-common";
+import { SignupInput } from "penscape-common";
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
 
 export const Auth = ({ type }: { type: "signup" | "signin" }) => {
   const navigate = useNavigate();
 
-  const [postInputs, setpostInputs] = useState<SignupType>({
+  const [postInputs, setpostInputs] = useState<SignupInput>({
     name: "",
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -71,7 +71,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
               onChange={(e) => {
                 setpostInputs({
                   ...postInputs,
-                  email: e.target.value,
+                  username: e.target.value,
                 });
               }}
             />
