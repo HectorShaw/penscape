@@ -1,26 +1,44 @@
-import { BlogSkeleton } from "../components/BlogSkeleton";
+import { Appbar } from "../components/Appbar";
+import { FullBlog } from "../components/FullBlog";
+import { Spinner } from "../components/Spinner";
 import { useBlog } from "../hooks";
 import { useParams } from "react-router-dom";
 
 export const Blog = () => {
-  const { id } = useParams()
-  const { loading, blog } = useBlog({
-    id: id || ""
-  });
-  if (loading) return <div>
-    <BlogSkeleton />
-    <BlogSkeleton />
-    <BlogSkeleton />
-  </div>;
-  return (
-    <div>
-      <div className="flex justify-center">
-        <div className="max-w-screen-md w-screen">
-          <div className="text-3xl font-extrabold">{blog?.title}</div>
-          <div className="text-slate-400">By {blog?.author.name}</div>
-          <div className="pt-4">{blog?.content}</div>
+  const { id } = useParams<{ id: string }>();
+  const { loading, blog } = useBlog({ id: id || "" });
+
+  console.log('Blog component state:', { loading, blog });
+
+  if (loading) {
+    return (
+      <div>
+        <Appbar />
+        <div className="h-screen flex flex-col justify-center">
+          <div className="flex justify-center">
+            <Spinner />
+          </div>
         </div>
       </div>
+    );
+  }
+
+  if (!blog) {
+    return (
+      <div>
+        <Appbar />
+        <div className="h-screen flex flex-col justify-center">
+          <div className="flex justify-center">
+            <div>No blog found</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <FullBlog blog={blog} />
     </div>
   );
 };
