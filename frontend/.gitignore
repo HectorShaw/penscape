@@ -21,4 +21,5 @@ config.ts
 *.njsproj
 *.sln
 *.sw?
-config.ts
+.env.local
+
