@@ -2,7 +2,8 @@ import  { ChangeEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SignupInput } from "penscape-common";
 import axios from "axios";
-import { BACKEND_URL } from "../config";
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const Auth = ({ type }: { type: "signup" | "signin" }) => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
       const response = await axios.post(
         `${BACKEND_URL}/api/v1/user/${type === "signin" ? "signin" : "signup"}`,
         postInputs
+        
       );
 
 
@@ -29,8 +31,10 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     }
   }
 
+  console.log('Backend URL:', import.meta.env.VITE_BACKEND_URL);
 
   return (
+    
     
     <div className="h-screen flex justify-center flex-col">
       <div className="flex justify-center">
